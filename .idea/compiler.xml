@@ -7,6 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Backstage" />
+        <module name="canvas-backstage" />
+        <module name="canvas-common" />
+        <module name="canvas-site" />
         <module name="Common" />
         <module name="Site" />
       </profile>

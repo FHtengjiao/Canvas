@@ -7,6 +7,30 @@ mapper 用于定义一个映射配置文件的根节点
 namespace属性是用来配置命名空间，主要进行session级别的缓存管理
 命名空间默认情况下，使用我们当前操作的实体类的全路径
 -->
-<mapper namespace="com.imooc.study.entity.Category">
+<mapper namespace="com.imooc.study.dao.CategoryDao">
+
+    <select id="findCategories" resultType="com.imooc.study.entity.Category">
+      SELECT * FROM category
+      <if test="id != null">WHERE id = #{id}</if>
+    </select>
+
+    <insert id="addCategory" useGeneratedKeys="true" keyProperty="id">
+        INSERT canvascategory(name, createTime, updateTime, descriptioon)
+        VALUE(#{name}, #{createTime}, #{updateTime}, #{description})
+    </insert>
+
+    <update id="updateCategory">
+        UPDATE canvascategory
+        <set>
+            <if test="name != null">name = #{name}</if>
+            <if test="createTime != null">createTime = #{createTime}</if>
+            <if test="updateTime != null">updateTime = #{updateTime}</if>
+            <if test="description != null">description = #{description}</if>
+        </set>
+    </update>
+
+    <delete id="deleteCategory">
+        DELETE FROM canvascategroy WHERE id = #{id}
+    </delete>
 
 </mapper>

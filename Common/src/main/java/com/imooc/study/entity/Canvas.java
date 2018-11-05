@@ -12,7 +12,7 @@ public class Canvas {
     private String category;
     private Byte[] smallImg;
     private Date createTime;
-    private Date updateTimte;
+    private Date updateTime;
     private String description;
 
     public Long getId() {
@@ -55,12 +55,12 @@ public class Canvas {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTimte() {
-        return updateTimte;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdateTimte(Date updateTimte) {
-        this.updateTimte = updateTimte;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public String getDescription() {
@@ -79,7 +79,7 @@ public class Canvas {
                 ", Category='" + category + '\'' +
                 ", smallImg=" + Arrays.toString(smallImg) +
                 ", createTime=" + createTime +
-                ", updateTimte=" + updateTimte +
+                ", updateTime=" + updateTime +
                 ", description='" + description + '\'' +
                 '}';
     }

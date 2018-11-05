@@ -5,15 +5,20 @@
 <!--
 mapper 用于定义一个映射配置文件的根节点
 namespace属性是用来配置命名空间，主要进行session级别的缓存管理
-命名空间默认情况下，使用我们当前操作的实体类的全路径
+命名空间默认情况下，使用当前操作的实体类的全路径
 -->
-<mapper namespace="com.imooc.study.entity.Canvas">
+<mapper namespace="com.imooc.study.dao.CanvasDao">
     <select id="findCanvas" resultType="com.imooc.study.entity.Canvas">
         SELECT * FROM canvas
-        <if test="id != null">
-            WHERE id = #{id}
-        </if>
+        <if test="id != null">WHERE id = #{id}</if>
+        <if test="category != null">WHERE category = #{category}</if>
     </select>
+
+    <select id="countCanvas" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM canvas
+        <if test="category != null">WHERE category = #{category}</if>
+    </select>
+
     <update id="updateCanvas">
         UPDATE canvas
         <set>
@@ -25,6 +30,7 @@ namespace属性是用来配置命名空间，主要进行session级别的缓存�
             <if test="updateTime != null">updateTime = #{updateTime}</if>
             <if test="description != null">description = #{description}</if>
         </set>
+        WHERE id = #{id}
     </update>
 
     <sql id="canvasSql">
@@ -35,4 +41,8 @@ namespace属性是用来配置命名空间，主要进行session级别的缓存�
         INSERT canvas(<include refid="canvasSql"></include>)
         VALUES(#{name}, #{category}, #{smallImg}, #{price}, #{createTime}, #{updateTime}, #{description})
     </insert>
+
+    <delete id="deleteCanvas">
+        DELETE FROM canvas WHERE id = #{id}
+    </delete>
 </mapper>
