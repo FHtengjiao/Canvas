@@ -10,8 +10,12 @@ namespace属性是用来配置命名空间，主要进行session级别的缓存�
 <mapper namespace="com.imooc.study.dao.CanvasDao">
     <select id="findCanvas" resultType="com.imooc.study.entity.Canvas">
         SELECT * FROM canvas
-        <if test="id != null">WHERE id = #{id}</if>
         <if test="category != null">WHERE category = #{category}</if>
+        LIMIT #{skip}, #{size}
+    </select>
+
+    <select id="findCanvasById" resultType="com.imooc.study.entity.Canvas">
+        SELECT * FROM canvas WHERE id = #{id}
     </select>
 
     <select id="countCanvas" resultType="java.lang.Integer">
