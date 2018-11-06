@@ -24,6 +24,10 @@ public class Canvas {
         this.updateTime = updateTime;
     }
 
+    public Canvas(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
     public Long getId() {
         return id;
     }

@@ -24,7 +24,7 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect("/loginPrompt.do");
             }
         } else if ("/loginPrompt.do".equals(request.getServletPath())) {
-            request.getRequestDispatcher("WEB-INF/views/biz/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/biz/login.jsp").forward(request, response);
         }
     }
 }

@@ -28,15 +28,15 @@ namespace属性是用来配置命名空间，主要进行session级别的缓存�
     <update id="updateCanvas">
         UPDATE canvas
         <set>
-            <if test="name != null">name = #{name}</if>
-            <if test="category != null">category = #{category}</if>
-            <if test="smallImg != null">smallImg = #{smallImg}</if>
-            <if test="price != null">price = #{price}</if>
-            <if test="createTime != null">createTime = #{createTime}</if>
-            <if test="updateTime != null">updateTime = #{updateTime}</if>
-            <if test="description != null">description = #{description}</if>
+            <if test="canvas.name != null and canvas.name != ''">name = #{canvas.name},</if>
+            <if test="canvas.category != null and canvas.category != ''">category = #{canvas.category},</if>
+            <if test="canvas.smallImg != null and canvas.smallImg != ''">smallImg = #{canvas.smallImg},</if>
+            <if test="canvas.price != null and canvas.price != ''">price = #{canvas.price},</if>
+            <if test="canvas.createTime != null">createTime = #{canvas.createTime},</if>
+            <if test="canvas.updateTime != null">updateTime = #{canvas.updateTime},</if>
+            <if test="canvas.description != null and canvas.description != ''">description = #{canvas.description}</if>
         </set>
-        WHERE id = #{id}
+        WHERE id = #{canvas.id}
     </update>
 
     <sql id="canvasSql">

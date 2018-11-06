@@ -6,7 +6,6 @@ import com.imooc.study.serivce.CanvasService;
 import com.imooc.study.serivce.CategoryService;
 import com.imooc.study.utils.StringUtils;
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUpload;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -17,8 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -103,23 +100,28 @@ public class CanvasServlet extends HttpServlet {
                     if (item.isFormField()) {
                         String name = item.getFieldName();
                         String value = item.getString("utf-8");
-                        switch (name) {
-                            case "name":
-                                canvas.setName(value);
-                                break;
-                            case "category":
-                                canvas.setCategory(value);
-                                break;
-                            case "price":
-                                try {
-                                    canvas.setPrice(Integer.parseInt(value));
-                                } catch (NumberFormatException e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                            case "description":
-                                canvas.setDescription(value);
-                                break;
+                        if (StringUtils.isNotEmpty(value)) {
+                            switch (name) {
+                                case "name":
+                                    canvas.setName(value);
+                                    break;
+                                case "category":
+                                    canvas.setCategory(value);
+                                    break;
+                                case "price":
+                                    try {
+                                        canvas.setPrice(Integer.parseInt(value));
+                                    } catch (NumberFormatException e) {
+                                        e.printStackTrace();
+                                    }
+                                    break;
+                                case "description":
+                                    canvas.setDescription(value);
+                                    break;
+                            }
+                        } else {
+                            response.sendRedirect("/canvas/list.do");
+                            return;
                         }
                     } else {
                         canvas.setSmallImg(item.get());
@@ -146,7 +148,54 @@ public class CanvasServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/views/error/500.jsp").forward(request, response);
             }
         } else if ("/canvas/edit.do".equals(request.getServletPath())) {
-
+            try {
+                ServletFileUpload fileUpload = new ServletFileUpload(new DiskFileItemFactory());
+                List<FileItem> fileItems = fileUpload.parseRequest(request);
+                Canvas canvas = new Canvas(new Date());
+                for (FileItem item:
+                        fileItems) {
+                    if (item.isFormField()) {
+                        String name = item.getFieldName();
+                        String value = item.getString("utf-8");
+                        if (StringUtils.isNotEmpty(value)) {
+                            switch (name) {
+                                case "id":
+                                    try {
+                                        canvas.setId(Long.parseLong(value));
+                                    } catch (NumberFormatException e) {
+                                        e.printStackTrace();
+                                    }
+                                    break;
+                                case "name":
+                                    canvas.setName(value);
+                                    break;
+                                case "category":
+                                    canvas.setCategory(value);
+                                    break;
+                                case "price":
+                                    try {
+                                        canvas.setPrice(Integer.parseInt(value));
+                                    } catch (NumberFormatException e) {
+                                        e.printStackTrace();
+                                    }
+                                    break;
+                                case "description":
+                                    canvas.setDescription(value);
+                                    break;
+                            }
+                        } else {
+                            response.sendRedirect("/canvas/list.do");
+                            return;
+                        }
+                    } else {
+                        canvas.setSmallImg(item.get());
+                    }
+                }
+                canvasService.updateCanvas(canvas);
+                response.sendRedirect("/canvas/list.do");
+            } catch (FileUploadException e) {
+                e.printStackTrace();
+            }
         } else if ("/canvas/delete.do".equals(request.getServletPath())) {
             String idStr = request.getParameter("id");
             if (StringUtils.isNotEmpty(idStr)) {

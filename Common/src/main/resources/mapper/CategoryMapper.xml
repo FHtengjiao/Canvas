@@ -22,8 +22,8 @@ namespace属性是用来配置命名空间，主要进行session级别的缓存�
     <update id="updateCategory">
         UPDATE canvascategory
         <set>
-            <if test="category.name != null">name = #{category.name}</if>
-            <if test="category.updateTime != null">updateTime = #{category.updateTime}</if>
+            <if test="category.name != null">name = #{category.name},</if>
+            <if test="category.updateTime != null">updateTime = #{category.updateTime},</if>
             <if test="category.description != null">description = #{category.description}</if>
         </set>
         WHERE id = #{category.id}

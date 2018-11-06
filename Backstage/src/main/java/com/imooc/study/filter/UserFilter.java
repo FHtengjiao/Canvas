@@ -16,7 +16,7 @@ public class UserFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String userName = (String) request.getSession().getAttribute("username");
-        if ("/login.do".equals(request.getServletPath()) || "loginPrompt.do".equals(request.getServletPath())) {
+        if ("/login.do".equals(request.getServletPath()) || "/loginPrompt.do".equals(request.getServletPath())) {
             filterChain.doFilter(request, response);
         } else if (null != userName && !"".equals(userName)) {
             filterChain.doFilter(request, response);

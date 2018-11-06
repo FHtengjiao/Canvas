@@ -18,6 +18,7 @@ public class SqlSessionFactoryListener implements ServletContextListener {
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~end~~~~~~~~~~~~~~~~~~~~~~~~~");
         MyBatisUtil.close();
     }
 }

@@ -30,7 +30,7 @@
     <div class="page-header">
         <h3><small>编辑</small></h3>
     </div>
-    <form class="form-horizontal" action="#" method="post" enctype="multipart/form-data">
+    <form class="form-horizontal" action="${pageContext.request.contextPath}/canvas/edit.do" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">名称 ：</label>
             <div class="col-sm-8">
@@ -67,7 +67,7 @@
             <div class="col-sm-8">
                 <input id="smallImg" name="smallImg" class="file-loading"
                        type="file" multiple accept=".jpg,.jpeg,.png" data-min-file-count="1"
-                       data-show-preview="true" value="">
+                       data-show-preview="true">
             </div>
         </div>
         <div class="form-group">
