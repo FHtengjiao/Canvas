@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface CategoryDao {
 
+    Category findCategories(@Param("id") Long id);
+
     List<Category> findCategories();
 
     void addCategory(@Param("category") Category category);

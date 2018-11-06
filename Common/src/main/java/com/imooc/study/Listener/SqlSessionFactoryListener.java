@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebListener;
 @WebListener("/")
 public class SqlSessionFactoryListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~start~~~~~~~~~~~~~~~~~~~~~~~~~");
         MyBatisUtil.initSqlSessionFactory();
     }
 

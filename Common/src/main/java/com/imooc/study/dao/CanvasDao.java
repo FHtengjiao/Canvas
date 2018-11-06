@@ -9,7 +9,7 @@ public interface CanvasDao {
 
     List<Canvas> findCanvas(@Param("skip") Integer skip, @Param("size") Integer size);
 
-    List<Canvas> findCanvas(@Param("category") String category, @Param("skip") Integer skip, @Param("size") Integer size);
+    List<Canvas> findCanvasByCategory(@Param("category") String category, @Param("skip") Integer skip, @Param("size") Integer size);
 
     Canvas findCanvasById(@Param("id") Long id);
 

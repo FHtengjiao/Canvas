@@ -9,9 +9,11 @@ namespace属性是用来配置命名空间，主要进行session级别的缓存�
 -->
 <mapper namespace="com.imooc.study.dao.CanvasDao">
     <select id="findCanvas" resultType="com.imooc.study.entity.Canvas">
-        SELECT * FROM canvas
-        <if test="category != null">WHERE category = #{category}</if>
-        LIMIT #{skip}, #{size}
+        SELECT * FROM canvas LIMIT #{skip}, #{size}
+    </select>
+
+    <select id="findCanvasByCategory" resultType="com.imooc.study.entity.Canvas">
+        SELECT * FROM canvas WHERE category = #{category} LIMIT #{skip}, #{size}
     </select>
 
     <select id="findCanvasById" resultType="com.imooc.study.entity.Canvas">
@@ -41,9 +43,10 @@ namespace属性是用来配置命名空间，主要进行session级别的缓存�
         name,category,smallImg,price,createTime,updateTime,description
     </sql>
 
-    <insert id="addCanvas" useGeneratedKeys="true" keyProperty="id">
+    <insert id="addCanvas" useGeneratedKeys="true" keyProperty="canvas.id">
         INSERT canvas(<include refid="canvasSql"></include>)
-        VALUES(#{name}, #{category}, #{smallImg}, #{price}, #{createTime}, #{updateTime}, #{description})
+        VALUES(#{canvas.name}, #{canvas.category}, #{canvas.smallImg}, #{canvas.price},
+        #{canvas.createTime}, #{canvas.updateTime}, #{canvas.description})
     </insert>
 
     <delete id="deleteCanvas">

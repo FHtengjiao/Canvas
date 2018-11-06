@@ -10,27 +10,27 @@ namespace属性是用来配置命名空间，主要进行session级别的缓存�
 <mapper namespace="com.imooc.study.dao.CategoryDao">
 
     <select id="findCategories" resultType="com.imooc.study.entity.Category">
-      SELECT * FROM category
+      SELECT * FROM canvascategory
       <if test="id != null">WHERE id = #{id}</if>
     </select>
 
-    <insert id="addCategory" useGeneratedKeys="true" keyProperty="id">
-        INSERT canvascategory(name, createTime, updateTime, descriptioon)
-        VALUE(#{name}, #{createTime}, #{updateTime}, #{description})
+    <insert id="addCategory" useGeneratedKeys="true" keyProperty="category.id">
+        INSERT canvascategory(name, createTime, updateTime, description)
+        VALUE(#{category.name}, #{category.createTime}, #{category.updateTime}, #{category.description})
     </insert>
 
     <update id="updateCategory">
         UPDATE canvascategory
         <set>
-            <if test="name != null">name = #{name}</if>
-            <if test="createTime != null">createTime = #{createTime}</if>
-            <if test="updateTime != null">updateTime = #{updateTime}</if>
-            <if test="description != null">description = #{description}</if>
+            <if test="category.name != null">name = #{category.name}</if>
+            <if test="category.updateTime != null">updateTime = #{category.updateTime}</if>
+            <if test="category.description != null">description = #{category.description}</if>
         </set>
+        WHERE id = #{category.id}
     </update>
 
     <delete id="deleteCategory">
-        DELETE FROM canvascategroy WHERE id = #{id}
+        DELETE FROM canvascategory WHERE id = #{id}
     </delete>
 
 </mapper>

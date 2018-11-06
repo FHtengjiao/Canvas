@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>Welcome</title>
-    <meta http-equiv="refresh" content="0;url=${pageContext.request.contextPath}/login.do">
+    <meta http-equiv="refresh" content="0;url=${pageContext.request.contextPath}/loginPrompt.do">
 </head>
 <body>
 

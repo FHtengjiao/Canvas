@@ -25,12 +25,12 @@ public class CanvasService {
         return canvas;
     }
 
-    public List<Canvas> findCanvas(String category, Integer skip, Integer size) {
+    public List<Canvas> findCanvasByCategory(String category, Integer skip, Integer size) {
         session = MyBatisUtil.getFactory().openSession();
         List<Canvas> canvas = null;
         try {
             CanvasDao mapper = session.getMapper(CanvasDao.class);
-            canvas = mapper.findCanvas(category, skip, size);
+            canvas = mapper.findCanvasByCategory(category, skip, size);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -107,7 +107,7 @@ public class CanvasService {
         }
     }
 
-    void deleteCanvas(Long id) {
+    public void deleteCanvas(Long id) {
         session = MyBatisUtil.getFactory().openSession();
         try {
             CanvasDao mapper = session.getMapper(CanvasDao.class);

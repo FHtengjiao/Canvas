@@ -11,6 +11,20 @@ public class CategoryService {
 
     private SqlSession session;
 
+    public Category findCategories(Long id) {
+        session = MyBatisUtil.getFactory().openSession();
+        Category category = null;
+        try {
+            CategoryDao mapper = session.getMapper(CategoryDao.class);
+            category = mapper.findCategories(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return category;
+    }
+
     public List<Category> findCategories() {
         session = MyBatisUtil.getFactory().openSession();
         List<Category> categories = null;

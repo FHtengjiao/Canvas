@@ -12,6 +12,22 @@ public class Category {
     private Date updateTime;
     private String description;
 
+    public Category(){}
+
+    public Category(String name, Date createTime, Date updateTime, String description) {
+        this.name = name;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+        this.description = description;
+    }
+
+    public Category(Long id, String name, Date updateTime, String description) {
+        this.id = id;
+        this.name = name;
+        this.updateTime = updateTime;
+        this.description = description;
+    }
+
     public Long getId() {
         return id;
     }

@@ -10,10 +10,19 @@ public class Canvas {
     private Long id;
     private String name;
     private String category;
-    private Byte[] smallImg;
+    private byte[] smallImg;
+    private Integer price;
     private Date createTime;
     private Date updateTime;
     private String description;
+
+    public Canvas() {
+    }
+
+    public Canvas(Date createTime, Date updateTime) {
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+    }
 
     public Long getId() {
         return id;
@@ -31,6 +40,14 @@ public class Canvas {
         this.name = name;
     }
 
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
     public String getCategory() {
         return category;
     }
@@ -39,11 +56,11 @@ public class Canvas {
         this.category = category;
     }
 
-    public Byte[] getSmallImg() {
+    public byte[] getSmallImg() {
         return smallImg;
     }
 
-    public void setSmallImg(Byte[] smallImg) {
+    public void setSmallImg(byte[] smallImg) {
         this.smallImg = smallImg;
     }
 

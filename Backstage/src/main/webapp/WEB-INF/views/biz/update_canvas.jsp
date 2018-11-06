@@ -1,9 +1,16 @@
-<html>
+<%@ page contentType="text/html;charset=utf-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!doctype html>
+<html lang="zh_CN">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>编辑</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/add.css">
+    <link rel="stylesheet" href="../../../lib/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../lib/css/add.css">
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -27,20 +34,32 @@
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">名称 ：</label>
             <div class="col-sm-8">
-                <input name="name" class="form-control" id="name" value="无名女郎">
-                <input type="hidden" name="id" class="form-control" id="id" value="001">
+                <input name="name" class="form-control" id="name" value="${canvas.name}">
+                <input type="hidden" name="id" class="form-control" id="id" value="${canvas.id}">
             </div>
         </div>
         <div class="form-group">
             <label for="categoryId" class="col-sm-2 control-label">分类 ：</label>
-            <select id="categoryId" name="categoryId" class="col-sm-2 form-control" style="width: auto">
-                    <option id="${item.id}" value="${item.id}">$分类一</option>
-            </select>
+            <div class="col-sm-8">
+                <select id="categoryId" name="categoryId" class="form-control" style="width: auto">
+                    <c:forEach var="category" items="${categories}" varStatus="status">
+                        <c:choose>
+                            <c:when test="${canvas.category == category.name}">
+                                <option id="${status.index}" value="${category.name}" selected>${category.name}</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option id="${status.index}" value="${category.name}">${category.name}</option>
+                            </c:otherwise>
+                        </c:choose>
+
+                    </c:forEach>
+                </select>
+            </div>
         </div>
         <div class="form-group">
             <label for="price" class="col-sm-2 control-label">价格 ：</label>
             <div class="col-sm-8">
-                <input name="price" type="number" class="form-control" id="price" value="5800">
+                <input name="price" type="number" class="form-control" id="price" value="${canvas.price}">
             </div>
         </div>
         <div class="form-group">
@@ -54,11 +73,9 @@
         <div class="form-group">
             <label for="description" class="col-sm-2 control-label">描述 ：</label>
             <div class="col-sm-8">
-                <input name="description" type="text" class="form-control" id="description" value="#">
+                <input name="description" type="text" class="form-control" id="description" value="${canvas.description}">
             </div>
         </div>
-
-
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-primary">保存</button>&nbsp;&nbsp;&nbsp;

@@ -7,7 +7,7 @@
 			  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<title>登录</title>
-		<link rel="stylesheet" href="css/login.css">
+		<link rel="stylesheet" href="../../../lib/css/login.css">
 	</head>
 	<body>
 		<div class="login">
@@ -17,7 +17,7 @@
 				</h1>
 				<button></button>
 			</div>
-			<form action="#" method="post">
+			<form action="${pageContext.request.contextPath}/login.do" method="post">
 				<div class="name">
 					<input type="text" id="name" name="username">
 					<p></p>
