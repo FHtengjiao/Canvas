@@ -15,11 +15,14 @@ public class Canvas {
     private Date createTime;
     private Date updateTime;
     private String description;
+    private String creator;
+    private String details;
 
     public Canvas() {
     }
 
-    public Canvas(Date createTime, Date updateTime) {
+    public Canvas(String creator, Date createTime, Date updateTime) {
+        this.creator = creator;
         this.createTime = createTime;
         this.updateTime = updateTime;
     }
@@ -90,6 +93,22 @@ public class Canvas {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 
     @Override

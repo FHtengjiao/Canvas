@@ -119,4 +119,18 @@ public class CanvasService {
             session.close();
         }
     }
+
+    public Canvas findImg(Long id) {
+        session = MyBatisUtil.getFactory().openSession();
+        Canvas canvas = null;
+        try {
+            CanvasDao mapper = session.getMapper(CanvasDao.class);
+            canvas = mapper.findImg(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return canvas;
+    }
 }

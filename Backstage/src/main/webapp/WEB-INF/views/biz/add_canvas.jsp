@@ -8,8 +8,6 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<html>
-    <head>
         <meta charset="UTF-8">
         <title>新建</title>
         <link rel="stylesheet" href="../../../lib/bootstrap-3.3.7-dist/css/bootstrap.min.css">
@@ -68,6 +66,12 @@
                     <label for="description" class="col-sm-2 control-label">描述 ：</label>
                     <div class="col-sm-8">
                         <input name="description" type="text" class="form-control" id="description">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="details" class="col-sm-2 control-label">详细介绍 ：</label>
+                    <div class="col-sm-8">
+                        <textarea id="details" class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">

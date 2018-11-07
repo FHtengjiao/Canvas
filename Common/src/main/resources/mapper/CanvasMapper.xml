@@ -8,16 +8,25 @@ namespace属性是用来配置命名空间，主要进行session级别的缓存�
 命名空间默认情况下，使用当前操作的实体类的全路径
 -->
 <mapper namespace="com.imooc.study.dao.CanvasDao">
+
+    <sql id="selectCanvas">
+        id,name,category,price,createTime,updateTime,description,creator,details
+    </sql>
+
     <select id="findCanvas" resultType="com.imooc.study.entity.Canvas">
-        SELECT * FROM canvas LIMIT #{skip}, #{size}
+        SELECT <include refid="selectCanvas"></include> FROM canvas LIMIT #{skip}, #{size}
     </select>
 
     <select id="findCanvasByCategory" resultType="com.imooc.study.entity.Canvas">
-        SELECT * FROM canvas WHERE category = #{category} LIMIT #{skip}, #{size}
+        SELECT <include refid="selectCanvas"></include> FROM canvas WHERE category = #{category} LIMIT #{skip}, #{size}
     </select>
 
     <select id="findCanvasById" resultType="com.imooc.study.entity.Canvas">
-        SELECT * FROM canvas WHERE id = #{id}
+        SELECT <include refid="selectCanvas"></include> FROM canvas WHERE id = #{id}
+    </select>
+
+    <select id="findImg" resultType="com.imooc.study.entity.Canvas">
+        SELECT smallImg FROM canvas WHERE id = #{id} for update
     </select>
 
     <select id="countCanvas" resultType="java.lang.Integer">
@@ -35,12 +44,13 @@ namespace属性是用来配置命名空间，主要进行session级别的缓存�
             <if test="canvas.createTime != null">createTime = #{canvas.createTime},</if>
             <if test="canvas.updateTime != null">updateTime = #{canvas.updateTime},</if>
             <if test="canvas.description != null and canvas.description != ''">description = #{canvas.description}</if>
+            <if test="canvas.details != null and canvas.details != ''">details = #{canvas.details}</if>
         </set>
         WHERE id = #{canvas.id}
     </update>
 
     <sql id="canvasSql">
-        name,category,smallImg,price,createTime,updateTime,description
+        name,category,smallImg,price,createTime,updateTime,description,creator,details
     </sql>
 
     <insert id="addCanvas" useGeneratedKeys="true" keyProperty="canvas.id">

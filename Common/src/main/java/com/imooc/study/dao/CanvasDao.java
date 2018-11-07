@@ -13,6 +13,8 @@ public interface CanvasDao {
 
     Canvas findCanvasById(@Param("id") Long id);
 
+    Canvas findImg(@Param("id") Long id);
+
     int countCanvas();
 
     int countCanvas(@Param("category") String category);

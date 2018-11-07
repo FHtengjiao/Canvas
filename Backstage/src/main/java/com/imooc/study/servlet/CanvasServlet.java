@@ -94,7 +94,7 @@ public class CanvasServlet extends HttpServlet {
             try {
                 ServletFileUpload fileUpload = new ServletFileUpload(new DiskFileItemFactory());
                 List<FileItem> fileItems = fileUpload.parseRequest(request);
-                Canvas canvas = new Canvas(new Date(), new Date());
+                Canvas canvas = new Canvas((String)request.getSession().getAttribute("username"), new Date(), new Date());
                 for (FileItem item:
                      fileItems) {
                     if (item.isFormField()) {
@@ -117,6 +117,9 @@ public class CanvasServlet extends HttpServlet {
                                     break;
                                 case "description":
                                     canvas.setDescription(value);
+                                    break;
+                                case "details":
+                                    canvas.setDetails(value);
                                     break;
                             }
                         } else {
@@ -181,6 +184,9 @@ public class CanvasServlet extends HttpServlet {
                                     break;
                                 case "description":
                                     canvas.setDescription(value);
+                                    break;
+                                case "details":
+                                    canvas.setDetails(value);
                                     break;
                             }
                         } else {
