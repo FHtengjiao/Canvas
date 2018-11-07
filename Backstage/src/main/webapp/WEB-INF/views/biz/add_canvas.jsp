@@ -71,7 +71,7 @@
                 <div class="form-group">
                     <label for="details" class="col-sm-2 control-label">详细介绍 ：</label>
                     <div class="col-sm-8">
-                        <textarea id="details" class="form-control"></textarea>
+                        <textarea id="details" class="form-control" name="details" rows="10"></textarea>
                     </div>
                 </div>
                 <div class="form-group">

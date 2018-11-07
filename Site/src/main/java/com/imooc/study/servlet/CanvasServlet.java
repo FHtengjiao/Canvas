@@ -104,6 +104,11 @@ public class CanvasServlet extends HttpServlet {
                     e.printStackTrace();
                 }
             }
+        } else if ("/canvas/detail.do".equals(request.getServletPath())) {
+            String id = request.getParameter("id");
+            Canvas canvas = canvasService.findCanvasById(Long.parseLong(id));
+            request.setAttribute("canvas", canvas);
+            request.getRequestDispatcher("/WEB-INF/views/biz/detail.jsp").forward(request, response);
         }
     }
 

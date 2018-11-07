@@ -64,7 +64,7 @@
                             ${canvas.description}
                         </p>
                         <div class="btn">
-                            <a href="#" class="edit">详情</a> 
+                            <a href="${pageContext.request.contextPath}/canvas/detail.do?id=${canvas.id}" class="edit">详情</a>
                         </div>
                     </div>
                 </li>

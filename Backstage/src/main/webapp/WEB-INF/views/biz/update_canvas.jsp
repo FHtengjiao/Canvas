@@ -77,6 +77,12 @@
             </div>
         </div>
         <div class="form-group">
+            <label for="details" class="col-sm-2 control-label">详细介绍 ：</label>
+            <div class="col-sm-8">
+                <textarea id="details" class="form-control" name="details" rows="10">${canvas.details}</textarea>
+            </div>
+        </div>
+        <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-primary">保存</button>&nbsp;&nbsp;&nbsp;
             </div>

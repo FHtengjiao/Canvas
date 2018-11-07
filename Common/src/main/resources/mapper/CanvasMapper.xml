@@ -39,12 +39,12 @@ namespace属性是用来配置命名空间，主要进行session级别的缓存�
         <set>
             <if test="canvas.name != null and canvas.name != ''">name = #{canvas.name},</if>
             <if test="canvas.category != null and canvas.category != ''">category = #{canvas.category},</if>
-            <if test="canvas.smallImg != null and canvas.smallImg != ''">smallImg = #{canvas.smallImg},</if>
+            <if test="canvas.smallImg != null">smallImg = #{canvas.smallImg},</if>
             <if test="canvas.price != null and canvas.price != ''">price = #{canvas.price},</if>
             <if test="canvas.createTime != null">createTime = #{canvas.createTime},</if>
             <if test="canvas.updateTime != null">updateTime = #{canvas.updateTime},</if>
-            <if test="canvas.description != null and canvas.description != ''">description = #{canvas.description}</if>
-            <if test="canvas.details != null and canvas.details != ''">details = #{canvas.details}</if>
+            <if test="canvas.description != null and canvas.description != ''">description = #{canvas.description},</if>
+            <if test="canvas.details != null and canvas.details != ''">details = #{canvas.details},</if>
         </set>
         WHERE id = #{canvas.id}
     </update>
@@ -56,7 +56,7 @@ namespace属性是用来配置命名空间，主要进行session级别的缓存�
     <insert id="addCanvas" useGeneratedKeys="true" keyProperty="canvas.id">
         INSERT canvas(<include refid="canvasSql"></include>)
         VALUES(#{canvas.name}, #{canvas.category}, #{canvas.smallImg}, #{canvas.price},
-        #{canvas.createTime}, #{canvas.updateTime}, #{canvas.description})
+        #{canvas.createTime}, #{canvas.updateTime}, #{canvas.description}, #{canvas.creator}, #{canvas.details})
     </insert>
 
     <delete id="deleteCanvas">
