@@ -10,7 +10,7 @@ public class Canvas {
     private Long id;
     private String name;
     private String category;
-    private byte[] smallImg;
+    private String smallImg;
     private Integer price;
     private Date createTime;
     private Date updateTime;
@@ -63,11 +63,11 @@ public class Canvas {
         this.category = category;
     }
 
-    public byte[] getSmallImg() {
+    public String getSmallImg() {
         return smallImg;
     }
 
-    public void setSmallImg(byte[] smallImg) {
+    public void setSmallImg(String smallImg) {
         this.smallImg = smallImg;
     }
 
@@ -117,7 +117,7 @@ public class Canvas {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", Category='" + category + '\'' +
-                ", smallImg=" + Arrays.toString(smallImg) +
+                ", smallImg=" + smallImg +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 ", description='" + description + '\'' +

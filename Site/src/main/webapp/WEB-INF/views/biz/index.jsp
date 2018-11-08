@@ -57,7 +57,7 @@
             <ul>
                 <c:forEach var="canvas" items="${canvases}">
                 <li>
-                    <img class="img-li-fix" src="${pageContext.request.contextPath}/canvas/getImg.do?id=${canvas.id}" alt="${canvas.name}">
+                    <img class="img-li-fix" src="${canvas.smallImg}" alt="${canvas.name}">
                     <div class="info">
                         <h3 class="img_title">${canvas.name}</h3>
                         <p>

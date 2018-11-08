@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,14 +26,14 @@
     <div class="content">
         <div class="section" style="margin-top:20px;">
             <div class="width1200">
-                <div class="fl"><img src="${pageContext.request.contextPath}/canvas/getImg.do?id=${canvas.id}"/></div>
+                <div class="fl"><img src="${canvas.smallImg}"/></div>
                 <div class="fl sec_intru_bg">
                     <dl>
                         <dt>${canvas.name}</dt>
                         <dd>
                             <p>发布人：<span>${canvas.creator}</span></p>
-                            <p>发布时间：<span>2017年2月16日</span></p>
-                            <p>修改时间：<span>2017年2月17日</span></p>
+                            <p>发布时间：<span><fmt:formatDate value="${canvas.createTime}" pattern="yyyy年MM月dd天"></span></p>
+                            <p>修改时间：<span><fmt:formatDate value="${canvas.updateTime}" pattern="yyyy年MM月dd天"></span></p>
                         </dd>
                     </dl>
                     <ul>

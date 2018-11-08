@@ -75,35 +75,6 @@ public class CanvasServlet extends HttpServlet {
             request.setAttribute("categories", categories);
 
             request.getRequestDispatcher("/WEB-INF/views/biz/index.jsp").forward(request, response);
-        } else if ("/canvas/getImg.do".equals(request.getServletPath())) {
-            String idStr = request.getParameter("id");
-            System.out.println(idStr);
-            if (StringUtils.isNotEmpty(idStr)) {
-                try {
-                    Canvas canvas = canvasService.findImg(Long.parseLong(idStr));
-                    try {
-                        response.setContentType("multipart/form-data");
-                        if (canvas != null && null != canvas.getSmallImg()) {
-                            System.out.println(idStr+"::"+ Arrays.toString(canvas.getSmallImg()));
-                            InputStream is = new ByteArrayInputStream(canvas.getSmallImg());
-                            OutputStream os = response.getOutputStream();
-                            byte[] buff = new byte[1024];
-                            int len = 0;
-                            while ((len = is.read(buff)) != -1) {
-                                os.write(buff,0, len);
-                            }
-                            os.flush();
-                            os.close();
-                            is.close();
-                            response.flushBuffer();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-            }
         } else if ("/canvas/detail.do".equals(request.getServletPath())) {
             String id = request.getParameter("id");
             Canvas canvas = canvasService.findCanvasById(Long.parseLong(id));

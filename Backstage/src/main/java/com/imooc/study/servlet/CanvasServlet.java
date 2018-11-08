@@ -4,19 +4,14 @@ import com.imooc.study.entity.Canvas;
 import com.imooc.study.entity.Category;
 import com.imooc.study.serivce.CanvasService;
 import com.imooc.study.serivce.CategoryService;
+import com.imooc.study.util.ParserRequest;
 import com.imooc.study.utils.StringUtils;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 
@@ -91,50 +86,7 @@ public class CanvasServlet extends HttpServlet {
             request.setAttribute("categories", categories);
             request.getRequestDispatcher("/WEB-INF/views/biz/add_canvas.jsp").forward(request, response);
         } else if ("/canvas/add.do".equals(request.getServletPath())) {
-            try {
-                ServletFileUpload fileUpload = new ServletFileUpload(new DiskFileItemFactory());
-                List<FileItem> fileItems = fileUpload.parseRequest(request);
-                Canvas canvas = new Canvas((String)request.getSession().getAttribute("username"), new Date(), new Date());
-                for (FileItem item:
-                     fileItems) {
-                    if (item.isFormField()) {
-                        String name = item.getFieldName();
-                        String value = item.getString("utf-8");
-                        if (StringUtils.isNotEmpty(value)) {
-                            switch (name) {
-                                case "name":
-                                    canvas.setName(value);
-                                    break;
-                                case "category":
-                                    canvas.setCategory(value);
-                                    break;
-                                case "price":
-                                    try {
-                                        canvas.setPrice(Integer.parseInt(value));
-                                    } catch (NumberFormatException e) {
-                                        e.printStackTrace();
-                                    }
-                                    break;
-                                case "description":
-                                    canvas.setDescription(value);
-                                    break;
-                                case "details":
-                                    canvas.setDetails(value);
-                                    break;
-                            }
-                        } else {
-                            response.sendRedirect("/canvas/list.do");
-                            return;
-                        }
-                    } else {
-                        canvas.setSmallImg(item.get());
-                    }
-                }
-                canvasService.addCanvas(canvas);
-                response.sendRedirect("/canvas/list.do");
-            } catch (FileUploadException e) {
-                e.printStackTrace();
-            }
+            ParserRequest.fileUpload(request, response, "add", canvasService);
         } else if ("/canvas/editPrompt.do".equals(request.getServletPath())) {
             String idStr = request.getParameter("id");
             if (StringUtils.isNotEmpty(idStr)) {
@@ -151,57 +103,7 @@ public class CanvasServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/views/error/500.jsp").forward(request, response);
             }
         } else if ("/canvas/edit.do".equals(request.getServletPath())) {
-            try {
-                ServletFileUpload fileUpload = new ServletFileUpload(new DiskFileItemFactory());
-                List<FileItem> fileItems = fileUpload.parseRequest(request);
-                Canvas canvas = new Canvas(new Date());
-                for (FileItem item:
-                        fileItems) {
-                    if (item.isFormField()) {
-                        String name = item.getFieldName();
-                        String value = item.getString("utf-8");
-                        if (StringUtils.isNotEmpty(value)) {
-                            switch (name) {
-                                case "id":
-                                    try {
-                                        canvas.setId(Long.parseLong(value));
-                                    } catch (NumberFormatException e) {
-                                        e.printStackTrace();
-                                    }
-                                    break;
-                                case "name":
-                                    canvas.setName(value);
-                                    break;
-                                case "category":
-                                    canvas.setCategory(value);
-                                    break;
-                                case "price":
-                                    try {
-                                        canvas.setPrice(Integer.parseInt(value));
-                                    } catch (NumberFormatException e) {
-                                        e.printStackTrace();
-                                    }
-                                    break;
-                                case "description":
-                                    canvas.setDescription(value);
-                                    break;
-                                case "details":
-                                    canvas.setDetails(value);
-                                    break;
-                            }
-                        } else {
-                            response.sendRedirect("/canvas/list.do");
-                            return;
-                        }
-                    } else {
-                        canvas.setSmallImg(item.get());
-                    }
-                }
-                canvasService.updateCanvas(canvas);
-                response.sendRedirect("/canvas/list.do");
-            } catch (FileUploadException e) {
-                e.printStackTrace();
-            }
+            ParserRequest.fileUpload(request, response, "edit", canvasService);
         } else if ("/canvas/delete.do".equals(request.getServletPath())) {
             String idStr = request.getParameter("id");
             if (StringUtils.isNotEmpty(idStr)) {
