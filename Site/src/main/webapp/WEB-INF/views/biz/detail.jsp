@@ -8,8 +8,6 @@
     <title>详情</title>
     <link rel="stylesheet" type="text/css" href="../../../lib/css/common.css" />
     <link rel="stylesheet" type="text/css" href="../../../lib/css/detail.css" />
-<!--<link rel="stylesheet" type="text/css" href="style/reset.css" />
-    <link rel="stylesheet" type="text/css" href="style/style.css" />-->
 </head>
 <body class="bgf8">
     <div class="header">
@@ -26,14 +24,14 @@
     <div class="content">
         <div class="section" style="margin-top:20px;">
             <div class="width1200">
-                <div class="fl"><img src="${canvas.smallImg}"/></div>
+                <div class="fl"><img src="${canvas.smallImg}" width="734px" height="432px"/></div>
                 <div class="fl sec_intru_bg">
                     <dl>
                         <dt>${canvas.name}</dt>
                         <dd>
                             <p>发布人：<span>${canvas.creator}</span></p>
-                            <p>发布时间：<span><fmt:formatDate value="${canvas.createTime}" pattern="yyyy年MM月dd天"></span></p>
-                            <p>修改时间：<span><fmt:formatDate value="${canvas.updateTime}" pattern="yyyy年MM月dd天"></span></p>
+                            <p>发布时间：<span><fmt:formatDate value="${canvas.createTime}" pattern="yyyy年MM月dd天"></fmt:formatDate></span></p>
+                            <p>修改时间：<span><fmt:formatDate value="${canvas.updateTime}" pattern="yyyy年MM月dd天"></fmt:formatDate></span></p>
                         </dd>
                     </dl>
                     <ul>
@@ -53,5 +51,5 @@
             <p><span>M-GALLARY</span>©2017 POWERED BY IMOOC.INC</p>
         </div>
     </div>
-    </body>
-    </html>
+</body>
+</html>

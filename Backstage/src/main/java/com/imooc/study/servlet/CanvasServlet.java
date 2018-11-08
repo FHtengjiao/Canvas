@@ -70,6 +70,7 @@ public class CanvasServlet extends HttpServlet {
             // 计算总共的页面
             int totalPage = canvasCount % 10 == 0 ? canvasCount / 10 : canvasCount / 10 + 1;
 
+            request.setAttribute("category", category);
             request.setAttribute("totalPage", totalPage);
             request.setAttribute("canvases", canvas);
             request.setAttribute("page", page);

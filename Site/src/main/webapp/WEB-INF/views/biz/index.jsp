@@ -20,14 +20,22 @@
         $().ready(function () {
             let page = "${page}";
             let category = "${category}";
-            console.log(category);
-            console.log(page);
+            let totalPage = "${totalPage}";
             $("li[id="+page+"]").empty();
             $("li[id="+page+"]").append("<span class='first-page'>"+page+"</span>");
             if (category != "") {
                 $("li[id="+category+"]").addClass("active");
-            }else
+            }else {
                 $("li[id=all]").addClass("active");
+            }
+            if (page > 1) {
+                $("#previous").empty();
+                $("#previous").append("<a href='${pageContext.request.contextPath}/canvas/list.do?page=${page-1}&category=${category}'>上一页</a>");
+            }
+            if (page < totalPage) {
+                $("#next").empty();
+                $("#next").append("<a href='${pageContext.request.contextPath}/canvas/list.do?page=${page+1}&category=${category}'>下一页</a>");
+            }
         });
     </script>
 </head>
@@ -73,13 +81,13 @@
         </div>
         <div class="page-nav">
             <ul>
-                <li><a href="#">首页</a></li>
-                <li><a href="#">上一页</a></li>
+                <li id="firstPage"><a href="${pageContext.request.contextPath}/canvas/list.do?page=1&category=${category}">首页</a></li>
+                <li id="previous"><span>上一页</span></li>
                 <c:forEach begin="1" end="${totalPage}" var="i">
                     <li id="${i}"><a href="${pageContext.request.contextPath}/canvas/list.do?page=${i}&category=${category}">${i}</a></li>
                 </c:forEach>
-                <li><a href="#">下一页</a></li>
-                <li><a href="#">尾页</a></li>
+                <li id="next"><span>下一页</span></li>
+                <li id="endPage"><a href="${pageContext.request.contextPath}/canvas/list.do?page=${totalPage}&category=${category}">尾页</a></li>
             </ul>
         </div>
     </div>
