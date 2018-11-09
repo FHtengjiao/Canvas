@@ -36,52 +36,39 @@
         </section>
         <section class="main">
             <div class="container">
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>名称</th>
-                            <th>创建时间</th>
-                            <th>最后修改时间</th>
-                            <th>描述</th>
-                            <th>编辑</th>
-                            <th>删除</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach items="${categories}" var="category">
-                        <tr>
-                            <td>${category.name}</td>
-                            <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${category.createTime}"/></td>
-                            <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${category.updateTime}"/></td>
-                            <td>${category.description}</td>
-                            <td><a href="${pageContext.request.contextPath}/canvasCategory/editPrompt.do?id=${category.id}">编辑</a></td>
-                            <td><a href="${pageContext.request.contextPath}/canvasCategory/delete.do?id=${category.id}">删除</a></td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <section class="page">
-            <div class="container">
-                <div id="fatie">
-                    <a href="${pageContext.request.contextPath}/canvasCategory/addPrompt.do" class="btn btn-primary" role="button">新建</a>
+                <div class="row">
+                    <div class="panel panel-default">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>名称</th>
+                                    <th>创建时间</th>
+                                    <th>最后修改时间</th>
+                                    <th>描述</th>
+                                    <th>编辑</th>
+                                    <th>删除</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${categories}" var="category">
+                                <tr>
+                                    <td>${category.name}</td>
+                                    <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${category.createTime}"/></td>
+                                    <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${category.updateTime}"/></td>
+                                    <td>${category.description}</td>
+                                    <td><a href="${pageContext.request.contextPath}/canvasCategory/editPrompt.do?id=${category.id}">编辑</a></td>
+                                    <td><a href="${pageContext.request.contextPath}/canvasCategory/delete.do?id=${category.id}">删除</a></td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-
-
-                <!-- <div id="pagefy">
-                    <ul>
-                        <form id="messageForm" action="#" method="post">
-                            <input type="hidden" id="page" name="page" value="3">
-                            <input type="hidden" id="last" name="last" value="1">
-                            <li><a href="#" onclick="submitMessageForm('first')">首页</a></li>
-                            <li><a href="#" onclick="submitMessageForm('pre')">上一页</a></li>
-                            <li><a href="#">当前第1页</a></li>
-                            <li><a href="#" onclick="submitMessageForm('next')">下一页</a></li>
-                            <li><a href="#" onclick="submitMessageForm('last')">尾页</a></li>
-                        </form>
-                    </ul>
-                </div> -->
+                <div class="row">
+                    <div>
+                        <a href="${pageContext.request.contextPath}/canvasCategory/addPrompt.do" class="btn btn-primary" role="button">新&nbsp;建</a>
+                    </div>
+                </div>
             </div>
         </section>
         <footer>
