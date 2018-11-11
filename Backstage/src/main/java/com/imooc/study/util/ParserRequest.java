@@ -11,6 +11,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,10 +64,11 @@ public class ParserRequest {
                     }
                 } else {
                     if (StringUtils.isNotEmpty(item.getName())) {
+                        String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/img/";
                         String filePath = request.getServletContext().getRealPath("/");
                         String uuidName = StringUtils.getRandomFileName(item.getName());
                         String url = filePath + uuidName;
-                        canvas.setSmallImg("http://127.0.0.1:8081/img/" + uuidName);
+                        canvas.setSmallImg(path + uuidName);
                         InputStream is = item.getInputStream();
                         FileOutputStream fos = new FileOutputStream(url);
                         byte[] buff = new byte[1024];
@@ -89,6 +91,15 @@ public class ParserRequest {
                 canvas.setCreator((String) request.getSession().getAttribute("username"));
                 canvasService.addCanvas(canvas);
             } else {
+                Long id  = canvas.getId();
+                String picPath = canvasService.findCanvasById(id).getSmallImg();
+                String picName = picPath.substring(picPath.lastIndexOf("/"));
+                String picRealPath = request.getServletContext().getRealPath("/") + picName;
+                try {
+                    boolean delete = new File(picRealPath).delete();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 canvasService.updateCanvas(canvas);
             }
             response.sendRedirect("/canvas/list.do");
