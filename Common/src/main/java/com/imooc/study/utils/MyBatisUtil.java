@@ -14,7 +14,9 @@ public class MyBatisUtil {
     private static ThreadLocal<SqlSession> threadLocal; //用于存放SqlSession
     private final static String RESOURCE = "mybatis-conf.xml";  //mybatis的配置文件
 
-    //初始化SqlSessionFactory
+    /**
+     * 初始化SqlSessionFactory
+     */
     public static void initSqlSessionFactory() {
         try {
             InputStream is = Resources.getResourceAsStream(RESOURCE);
@@ -25,7 +27,9 @@ public class MyBatisUtil {
     }
 
 
-    //用于获取SqlSessionFactory
+    /**
+     * 用于获取SqlSessionFactory
+     */
     public static SqlSessionFactory getFactory(){
         return factory;
     }

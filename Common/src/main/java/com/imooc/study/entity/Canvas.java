@@ -1,6 +1,5 @@
 package com.imooc.study.entity;
 
-import java.util.Arrays;
 import java.util.Date;
 
 public class Canvas {

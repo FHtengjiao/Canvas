@@ -17,8 +17,9 @@ public class LoginServlet extends HttpServlet {
         if ("/login.do".equals(request.getServletPath())) {
             String userName = request.getParameter("username");
             String password = request.getParameter("password");
+            // 当userName和password不为空且相同的情况下，允许用户登录
             if (StringUtils.isNotEmpty(userName) && userName.equals(password)) {
-                request.getSession().setAttribute("username", userName);
+                request.getSession().setAttribute("username", userName);  //将用户名保存在session中
                 response.sendRedirect("/canvas/list.do");
             } else {
                 response.sendRedirect("/loginPrompt.do");

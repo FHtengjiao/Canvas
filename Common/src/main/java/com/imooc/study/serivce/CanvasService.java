@@ -11,6 +11,9 @@ public class CanvasService {
 
     private SqlSession session;
 
+    /**
+     * 从指定的位置开始，查询指定数目的油画
+     * */
     public List<Canvas> findCanvas(Integer skip, Integer size) {
         session = MyBatisUtil.getFactory().openSession();
         List<Canvas> canvas = null;
@@ -25,6 +28,9 @@ public class CanvasService {
         return canvas;
     }
 
+    /**
+     * 指定有分类下，从指定的位置开始，查询指定数目的油画
+     * */
     public List<Canvas> findCanvasByCategory(String category, Integer skip, Integer size) {
         session = MyBatisUtil.getFactory().openSession();
         List<Canvas> canvas = null;
@@ -39,6 +45,9 @@ public class CanvasService {
         return canvas;
     }
 
+    /**
+     * 通过id查询油画
+     * */
     public Canvas findCanvasById(Long id) {
         session = MyBatisUtil.getFactory().openSession();
         Canvas canvas = null;
@@ -53,6 +62,9 @@ public class CanvasService {
         return canvas;
     }
 
+    /**
+     * 查询有多少油画
+     * */
     public int countCanvas() {
         session = MyBatisUtil.getFactory().openSession();
         int count = 0;
@@ -67,6 +79,9 @@ public class CanvasService {
         return count;
     }
 
+    /**
+     * 查询分类下有多少油画
+     * */
     public int countCanvas(String category) {
         session = MyBatisUtil.getFactory().openSession();
         int count = 0;
@@ -81,6 +96,9 @@ public class CanvasService {
         return count;
     }
 
+    /**
+     * 添加油画
+     * */
     public void addCanvas(Canvas canvas) {
         session = MyBatisUtil.getFactory().openSession();
         try {
@@ -94,6 +112,9 @@ public class CanvasService {
         }
     }
 
+    /**
+     * 更新油画
+     * */
     public void updateCanvas(Canvas canvas) {
         session = MyBatisUtil.getFactory().openSession();
         try {
@@ -107,6 +128,9 @@ public class CanvasService {
         }
     }
 
+    /**
+     * 删除油画
+     * */
     public void deleteCanvas(Long id) {
         session = MyBatisUtil.getFactory().openSession();
         try {
@@ -118,19 +142,5 @@ public class CanvasService {
         } finally {
             session.close();
         }
-    }
-
-    public Canvas findImg(Long id) {
-        session = MyBatisUtil.getFactory().openSession();
-        Canvas canvas = null;
-        try {
-            CanvasDao mapper = session.getMapper(CanvasDao.class);
-            canvas = mapper.findImg(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return canvas;
     }
 }

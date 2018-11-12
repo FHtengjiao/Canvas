@@ -33,15 +33,18 @@ public class CanvasCategoryServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // 展示所有的分类
         if ("/canvasCategory/list.do".equals(request.getServletPath())) {
             List<Category> categories = categoryService.findCategories();
             request.setAttribute("categories", categories);
             request.getRequestDispatcher("/WEB-INF/views/biz/category_list.jsp").forward(request, response);
-        } else if ("/canvasCategory/editPrompt.do".equals(request.getServletPath())) {
+        }
+        // 跳转编辑分类页面
+        else if ("/canvasCategory/editPrompt.do".equals(request.getServletPath())) {
             String idStr = request.getParameter("id");
             if (StringUtils.isNotEmpty(idStr)) {
                 try {
-                    Category category = categoryService.findCategories(Long.parseLong(idStr));
+                    Category category = categoryService.findCategoryById(Long.parseLong(idStr));
                     request.setAttribute("category", category);
                     request.getRequestDispatcher("/WEB-INF/views/biz/update_category.jsp").forward(request, response);
                 } catch (NumberFormatException e) {
@@ -50,7 +53,9 @@ public class CanvasCategoryServlet extends HttpServlet {
             } else {
                 request.getRequestDispatcher("/WEB-INF/views/error/500.jsp").forward(request, response);
             }
-        } else if ("/canvasCategory/edit.do".equals(request.getServletPath())) {
+        }
+        // 编辑分类
+        else if ("/canvasCategory/edit.do".equals(request.getServletPath())) {
             String id = request.getParameter("id");
             String name = request.getParameter("name");
             String description = request.getParameter("description");
@@ -68,7 +73,9 @@ public class CanvasCategoryServlet extends HttpServlet {
                     request.getRequestDispatcher("/canvasCategory/editPrompt.do?id=" + Integer.parseInt(id)).forward(request, response);
             } else
                 request.getRequestDispatcher("/WEB-INF/views/error/500.jsp").forward(request, response);
-        } else if ("/canvasCategory/delete.do".equals(request.getServletPath())) {
+        }
+        // 删除分类
+        else if ("/canvasCategory/delete.do".equals(request.getServletPath())) {
             String idStr = request.getParameter("id");
             if (StringUtils.isNotEmpty(idStr)) {
                 try {
@@ -80,9 +87,13 @@ public class CanvasCategoryServlet extends HttpServlet {
             } else {
                 request.getRequestDispatcher("/WEB-INF/views/error/500.jsp").forward(request, response);
             }
-        } else if ("/canvasCategory/addPrompt.do".equals(request.getServletPath())) {
+        }
+        // 跳转至添加分类的页面
+        else if ("/canvasCategory/addPrompt.do".equals(request.getServletPath())) {
             request.getRequestDispatcher("/WEB-INF/views/biz/add_category.jsp").forward(request, response);
-        } else if ("/canvasCategory/add.do".equals(request.getServletPath())) {
+        }
+        // 添加分类
+        else if ("/canvasCategory/add.do".equals(request.getServletPath())) {
             String name = request.getParameter("name");
             String description = request.getParameter("description");
             if (StringUtils.isNotEmpty(name) && StringUtils.isNotEmpty(description)) {

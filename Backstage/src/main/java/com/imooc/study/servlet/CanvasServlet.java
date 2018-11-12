@@ -60,15 +60,15 @@ public class CanvasServlet extends HttpServlet {
 
             // 判断类别是否为空，为空就获取所有的油画和油画数，否则获取目标类别的油画和油画数
             if (StringUtils.isNotEmpty(category)) {
-                canvas = canvasService.findCanvasByCategory(category, (page - 1) * 3, 3);
+                canvas = canvasService.findCanvasByCategory(category, (page - 1) * 5, 5);
                 canvasCount = canvasService.countCanvas(category);
             } else {
-                canvas = canvasService.findCanvas((page - 1) * 3, 3);
+                canvas = canvasService.findCanvas((page - 1) * 5, 5);
                 canvasCount = canvasService.countCanvas();
             }
 
             // 计算总共的页面
-            int totalPage = canvasCount % 3 == 0 ? canvasCount / 3 : canvasCount / 3 + 1;
+            int totalPage = canvasCount % 5 == 0 ? canvasCount / 5 : canvasCount / 5 + 1;
 
             request.setAttribute("category", category);
             request.setAttribute("totalPage", totalPage);
@@ -82,18 +82,25 @@ public class CanvasServlet extends HttpServlet {
             request.setAttribute("categories", categories);
 
             request.getRequestDispatcher("/WEB-INF/views/biz/canvas_list.jsp").forward(request, response);
-        } else if ("/canvas/addPrompt.do".equals(request.getServletPath())) {
+        }
+        // 跳转添加页面
+        else if ("/canvas/addPrompt.do".equals(request.getServletPath())) {
             List<Category> categories = categoryService.findCategories();
-            request.setAttribute("categories", categories);
+            request.setAttribute("categories", categories);  // 将分类传给前端，用于显示所有可选分类
             request.getRequestDispatcher("/WEB-INF/views/biz/add_canvas.jsp").forward(request, response);
-        } else if ("/canvas/add.do".equals(request.getServletPath())) {
+        }
+        // 新建油画
+        else if ("/canvas/add.do".equals(request.getServletPath())) {
             ParserRequest.fileUpload(request, response, "add", canvasService);
-        } else if ("/canvas/editPrompt.do".equals(request.getServletPath())) {
+        }
+        // 跳转至编辑油画页面
+        else if ("/canvas/editPrompt.do".equals(request.getServletPath())) {
             String idStr = request.getParameter("id");
             if (StringUtils.isNotEmpty(idStr)) {
                 try {
                     Canvas canvas = canvasService.findCanvasById(Long.parseLong(idStr));
                     List<Category> categories = categoryService.findCategories();
+                    // 向前端传入油画和所有分类
                     request.setAttribute("canvas", canvas);
                     request.setAttribute("categories", categories);
                     request.getRequestDispatcher("/WEB-INF/views/biz/update_canvas.jsp").forward(request, response);
@@ -103,9 +110,13 @@ public class CanvasServlet extends HttpServlet {
             } else {
                 request.getRequestDispatcher("/WEB-INF/views/error/500.jsp").forward(request, response);
             }
-        } else if ("/canvas/edit.do".equals(request.getServletPath())) {
+        }
+        // 编辑油画
+        else if ("/canvas/edit.do".equals(request.getServletPath())) {
             ParserRequest.fileUpload(request, response, "edit", canvasService);
-        } else if ("/canvas/delete.do".equals(request.getServletPath())) {
+        }
+        // 删除油画
+        else if ("/canvas/delete.do".equals(request.getServletPath())) {
             String idStr = request.getParameter("id");
             if (StringUtils.isNotEmpty(idStr)) {
                 try {

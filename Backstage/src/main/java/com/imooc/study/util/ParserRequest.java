@@ -22,13 +22,19 @@ public class ParserRequest {
 
     public static void fileUpload(HttpServletRequest request, HttpServletResponse response, String method, CanvasService canvasService) throws ServletException, IOException {
         try {
+            // 创建fileUpload的对象，用于解析
             ServletFileUpload fileUpload = new ServletFileUpload(new DiskFileItemFactory());
             List<FileItem> fileItems = fileUpload.parseRequest(request);
+
+            // 创建Canvas对象
             Canvas canvas = new Canvas(new Date());
+
+            // 解析出对应的字段并对Canvas对象设置对应的属性
             for (FileItem item: fileItems) {
                 if (item.isFormField()) {
                     String name = item.getFieldName();
                     String value = item.getString("utf-8");
+                    // 判断字段对应的值是否为空？
                     if (StringUtils.isNotEmpty(value)) {
                         switch (name) {
                             case "id":
@@ -59,18 +65,23 @@ public class ParserRequest {
                                 break;
                         }
                     } else {
-                        response.sendRedirect("/canvas/list.do");
+                        response.sendRedirect("/canvas/list.do"); //
                         return;
                     }
                 } else {
+                    // 判断上传的图片是否存在
                     if (StringUtils.isNotEmpty(item.getName())) {
-                        String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/img/";
-                        String filePath = request.getServletContext().getRealPath("/");
+                        // 设置图片储存在服务器的位置
+                        String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/img/";
+                        String path = request.getServletContext().getRealPath("/");
+
+                        // 生成随机的图片名称
                         String uuidName = StringUtils.getRandomFileName(item.getName());
-                        String url = filePath + uuidName;
-                        canvas.setSmallImg(path + uuidName);
+                        String filePath = path + uuidName;
+
+                        // 读取图片
                         InputStream is = item.getInputStream();
-                        FileOutputStream fos = new FileOutputStream(url);
+                        FileOutputStream fos = new FileOutputStream(filePath);
                         byte[] buff = new byte[1024];
                         int len = 0;
                         while ((len = is.read(buff)) != -1) {
@@ -79,26 +90,37 @@ public class ParserRequest {
                         }
                         is.close();
                         fos.close();
+
+                        // 设置属性
+                        canvas.setSmallImg(basePath + uuidName);
                     } else {
+                        //图片不存在，当是新建油画的时候，由于图片不能为空，所有返回添加页面
                         if ("add".equals(method)) {
                             response.sendRedirect("/canvas/add.do");
+                            return;
                         }
                     }
                 }
             }
+            // 执行新建油画时候的逻辑
             if ("add".equals(method)) {
                 canvas.setCreateTime(new Date());
                 canvas.setCreator((String) request.getSession().getAttribute("username"));
                 canvasService.addCanvas(canvas);
-            } else {
-                Long id  = canvas.getId();
-                String picPath = canvasService.findCanvasById(id).getSmallImg();
-                String picName = picPath.substring(picPath.lastIndexOf("/"));
-                String picRealPath = request.getServletContext().getRealPath("/") + picName;
-                try {
-                    boolean delete = new File(picRealPath).delete();
-                } catch (Exception e) {
-                    e.printStackTrace();
+            }
+            // 执行编辑油画时候的逻辑
+            else {
+                // 如果用户有新上传油画，执行删除老油画的操作
+                if (canvas.getSmallImg() != null) {
+                    Long id  = canvas.getId();
+                    String picPath = canvasService.findCanvasById(id).getSmallImg();
+                    String picName = picPath.substring(picPath.lastIndexOf("/"));
+                    String picRealPath = request.getServletContext().getRealPath("/") + picName;
+                    try {
+                        new File(picRealPath).delete();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 canvasService.updateCanvas(canvas);
             }

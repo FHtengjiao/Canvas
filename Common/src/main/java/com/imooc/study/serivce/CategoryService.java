@@ -11,7 +11,10 @@ public class CategoryService {
 
     private SqlSession session;
 
-    public Category findCategories(Long id) {
+    /**
+     * 通过id查询数据库中的分类
+     * */
+    public Category findCategoryById(Long id) {
         session = MyBatisUtil.getFactory().openSession();
         Category category = null;
         try {
@@ -25,6 +28,9 @@ public class CategoryService {
         return category;
     }
 
+    /**
+     * 查询数据库中所有的分类
+     * */
     public List<Category> findCategories() {
         session = MyBatisUtil.getFactory().openSession();
         List<Category> categories = null;
@@ -39,6 +45,9 @@ public class CategoryService {
         return categories;
     }
 
+    /**
+     * 新增分类
+     * */
     public void addCategory(Category category) {
         session = MyBatisUtil.getFactory().openSession();
         try {
@@ -52,6 +61,9 @@ public class CategoryService {
         }
     }
 
+    /**
+     * 更新分类
+     * */
     public void updateCategory(Category category) {
         session = MyBatisUtil.getFactory().openSession();
         try {
@@ -65,6 +77,9 @@ public class CategoryService {
         }
     }
 
+    /**
+     * 删除分类
+     * */
     public void deleteCategory(Long id) {
         session = MyBatisUtil.getFactory().openSession();
         try {

@@ -29,6 +29,7 @@
             let page = "${page}";
             let totalPage = "${totalPage}";
             $("li[id=page_"+page+"]").addClass("active");
+            $("li[id=page_"+page+"]").empty().append("<span>"+page+"</span>");
             if (page === "1") {
                 $("#Previous").addClass("disabled");
                 $("#Previous").empty().append("<span aria-hidden=\"true\">&laquo;</span>");
