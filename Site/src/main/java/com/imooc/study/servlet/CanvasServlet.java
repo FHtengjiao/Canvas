@@ -64,14 +64,15 @@ public class CanvasServlet extends HttpServlet {
             request.setAttribute("canvases", canvas);
             request.setAttribute("page", page);
 
-
             /* 计算和设置类别相关的参数 */
 
             List<Category> categories = categoryService.findCategories();
             request.setAttribute("categories", categories);
 
             request.getRequestDispatcher("/WEB-INF/views/biz/index.jsp").forward(request, response);
-        } else if ("/canvas/detail.do".equals(request.getServletPath())) {
+        }
+        // 详情页展示
+        else if ("/canvas/detail.do".equals(request.getServletPath())) {
             String id = request.getParameter("id");
             Canvas canvas = canvasService.findCanvasById(Long.parseLong(id));
             request.setAttribute("canvas", canvas);
