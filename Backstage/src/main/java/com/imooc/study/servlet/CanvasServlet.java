@@ -55,6 +55,7 @@ public class CanvasServlet extends HttpServlet {
                 } catch (NumberFormatException e) {
                     // 格式化参数，出错就报500错误
                     request.getRequestDispatcher("/WEB-INF/views/error/500.jsp").forward(request, response);
+                    return;
                 }
             }
 

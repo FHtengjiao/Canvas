@@ -11,7 +11,7 @@
     <title>油画列表</title>
     <link rel="stylesheet" href="../../../lib/css/index.css">
     <link rel="stylesheet" href="../../../lib/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-    <script src="../../../lib/JQuery/jquery-1.12.4.min.js"></script>
+    <script src="../../../lib/js/jquery-1.12.4.min.js"></script>
     <script src="../../../lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script>
         $().ready(function (){
