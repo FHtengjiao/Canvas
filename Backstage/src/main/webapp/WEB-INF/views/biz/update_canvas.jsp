@@ -39,9 +39,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="categoryId" class="col-sm-2 control-label">分类 ：</label>
+            <label for="category" class="col-sm-2 control-label">分类 ：</label>
             <div class="col-sm-8">
-                <select id="categoryId" name="categoryId" class="form-control" style="width: auto">
+                <select id="category" name="category" class="form-control" style="width: auto">
                     <c:forEach var="category" items="${categories}" varStatus="status">
                         <c:choose>
                             <c:when test="${canvas.category == category.name}">

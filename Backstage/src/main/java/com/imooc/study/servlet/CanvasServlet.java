@@ -5,6 +5,7 @@ import com.imooc.study.entity.Category;
 import com.imooc.study.serivce.CanvasService;
 import com.imooc.study.serivce.CategoryService;
 import com.imooc.study.util.ParserRequest;
+import com.imooc.study.utils.FileUtil;
 import com.imooc.study.utils.StringUtils;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
 
 @WebServlet(name="CanvasServlet", urlPatterns = {
@@ -92,7 +93,44 @@ public class CanvasServlet extends HttpServlet {
         }
         // 新建油画
         else if ("/canvas/add.do".equals(request.getServletPath())) {
-            ParserRequest.fileUpload(request, response, "add", canvasService);
+            // 获取提交的数据
+            Map<String, String> map = ParserRequest.fileUpload(request);
+            // 如果提交的数据不存在或者存在空或null
+            if (null == map || map.values().contains(null) || map.values().contains("")) {
+                response.sendRedirect("/canvas/addPrompt.do");
+                return;
+            }
+
+            // 添加油画需要的字段
+            Set<String> nameSet = new HashSet<>();
+            nameSet.add("name");
+            nameSet.add("category");
+            nameSet.add("price");
+            nameSet.add("smallImg");
+            nameSet.add("description");
+            nameSet.add("details");
+
+            // 如果缺少字段，则页面跳转至新建页面
+            if (!map.keySet().containsAll(nameSet)){
+                response.sendRedirect("/canvas/addPrompt.do");
+                return;
+            }
+
+            // 从提交结果中提取需要的参数，构造canvas对象
+            Canvas canvas = new Canvas();
+            canvas.setName(map.get("name"));
+            canvas.setCategory(map.get("category"));
+            canvas.setPrice(Integer.parseInt(map.get("price")));
+            canvas.setSmallImg(map.get("smallImg"));
+            canvas.setCreateTime(new Date());
+            canvas.setUpdateTime(new Date());
+            canvas.setCreator((String) request.getSession().getAttribute("username"));
+            canvas.setDetails(map.get("details"));
+            canvas.setDescription(map.get("description"));
+
+            // 执行添加油画操作，页面返回至油画展示页面
+            canvasService.addCanvas(canvas);
+            response.sendRedirect("/canvas/list.do");
         }
         // 跳转至编辑油画页面
         else if ("/canvas/editPrompt.do".equals(request.getServletPath())) {
@@ -114,13 +152,63 @@ public class CanvasServlet extends HttpServlet {
         }
         // 编辑油画
         else if ("/canvas/edit.do".equals(request.getServletPath())) {
-            ParserRequest.fileUpload(request, response, "edit", canvasService);
+            Map<String, String> map = ParserRequest.fileUpload(request);
+            if (null == map) {
+                response.sendRedirect("/canvas/addPrompt.do");
+                return;
+            }
+
+            // 编辑油画需要的字段
+            Set<String> nameSet = new HashSet<>();
+            nameSet.add("name");
+            nameSet.add("category");
+            nameSet.add("price");
+            nameSet.add("smallImg");
+            nameSet.add("description");
+            nameSet.add("details");
+
+            // 如果提交的字段中没有id，则报500错误
+            if (!map.keySet().contains("id")) {
+                request.getRequestDispatcher("/WEB-INF/views/error/500.jsp").forward(request, response);
+                return;
+            }
+
+            // 如果缺少字段，则页面跳转至编辑页面
+            if (!map.keySet().containsAll(nameSet)){
+                response.sendRedirect("/canvas/editPrompt.do?id="+map.get("id"));
+                return;
+            }
+            System.out.println(map);
+            // 从map提取数据，构造canvas
+            Canvas canvas = new Canvas();
+            canvas.setId(Long.parseLong(map.get("id")));
+            canvas.setUpdateTime(new Date());
+            if (!"".equals(map.get("name")))
+                canvas.setName(map.get("name"));
+            if (!"".equals(map.get("category")))
+                canvas.setCategory(map.get("category"));
+            if (!"".equals(map.get("smallImg")))
+                canvas.setSmallImg(map.get("smallImg"));
+            if (!"".equals(map.get("price")))
+                canvas.setPrice(Integer.parseInt(map.get("price")));
+            if (!"".equals(map.get("description")))
+                canvas.setDescription(map.get("description"));
+            if (!"".equals(map.get("details")))
+                canvas.setDetails(map.get("details"));
+            System.out.println(canvas);
+
+            // 执行更新操作
+            canvasService.updateCanvas(canvas);
+
+            response.sendRedirect("/canvas/list.do");
         }
         // 删除油画
         else if ("/canvas/delete.do".equals(request.getServletPath())) {
             String idStr = request.getParameter("id");
             if (StringUtils.isNotEmpty(idStr)) {
                 try {
+                    // 删除图片
+                    FileUtil.deletePicById(Long.parseLong(idStr), canvasService, request);
                     canvasService.deleteCanvas(Long.parseLong(idStr));
                     response.sendRedirect("/canvas/list.do");
                 } catch (NumberFormatException e) {
